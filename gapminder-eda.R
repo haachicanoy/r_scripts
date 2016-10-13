@@ -1,5 +1,5 @@
 # Functional programming using Gapminder data
-# H. Achicanoy taken from: url
+# H. Achicanoy taken from: https://youtu.be/rz3_FDVt9eg
 # CIAT, 2016
 
 library(gapminder)
