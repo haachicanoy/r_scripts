@@ -41,6 +41,16 @@ out <- c (out, map.identify (scores [,,6]))
 out <- c (out, map.identify (scores [,,7])) ##
 
 
+# Colombian data
+setwd("D:/Harold/_maps/landsat/images/2000") # set the working directory
+foldersList <- normalizePath(list.dirs(full.names = TRUE, recursive = FALSE))  # get absolute folder paths
+source("C:/Users/haachicanoy/Documents/GitHub/r_scripts/reflectanceImgTable4csv.R")
+outDF <- reflectanceImgTable4csv(foldersList, no_masking = 1)
+write.table(outDF, "reflectance_2000.csv", row.names = FALSE, quote = FALSE, sep = ", ")
+
+
+
+
 
 
 
