@@ -40,17 +40,37 @@ out <- map.identify (scores [,,5])
 out <- c (out, map.identify (scores [,,6]))
 out <- c (out, map.identify (scores [,,7])) ##
 
+# ============================================================================================================= #
+# Data source:  6-band Landsat 7 image (path 7 row 57) taken in 2000
 
-# Colombian data
-setwd("D:/Harold/_maps/landsat/images/2000") # set the working directory
-foldersList <- normalizePath(list.dirs(full.names = TRUE, recursive = FALSE))  # get absolute folder paths
-source("C:/Users/haachicanoy/Documents/GitHub/r_scripts/reflectanceImgTable4csv.R")
-outDF <- reflectanceImgTable4csv(foldersList, no_masking = 1)
-write.table(outDF, "reflectance_2000.csv", row.names = FALSE, quote = FALSE, sep = ", ")
+# R options
+options(warn = -1)
+options(scipen = 999)
 
+# load packages
+suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+suppressMessages(library(RSAGA))
+suppressMessages(library(RStoolbox))
 
+# set the working directory
+setwd("D:/Harold/_maps/landsat/images/2000")
 
+# get absolute meta data files
+mtlList <- list.files(path = './', pattern = '_MTL.txt$', full.names = T, recursive = T)
+rsNames <- list.dirs(path = './', full.names = F, recursive = F)
+rsNames <- rsNames[grep(pattern = '^LE', rsNames)]
 
-
-
-
+# preprocessing: reflectance correction
+lapply(1:length(mtlList), function(i){
+  
+  mtlFile  <- mtlList[i]
+  metaData <- RStoolbox::readMeta(mtlFile) # read meta data file
+  lsat     <- RStoolbox::stackMeta(mtlFile) # load all bands
+  lsat_ref <- RStoolbox::radCor(img = lsat, metaData = metaData, method = "apref") # reflectance correction
+  lsat_ref <- raster::unstack(lsat_ref)
+  lapply(1:length(lsat_ref), function(j){ # save individual rasters
+    raster::writeRaster(lsat_ref[[j]], filename = paste('./', rsNames[i], '/', names(lsat)[j], '_ref.tif', sep = ''), format = "GTiff", overwrite = TRUE)
+  })
+  
+})
