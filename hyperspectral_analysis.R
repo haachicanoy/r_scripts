@@ -42,6 +42,7 @@ out <- c (out, map.identify (scores [,,7])) ##
 
 # ============================================================================================================= #
 # Data source:  6-band Landsat 7 image (path 7 row 57) taken in 2000
+# ============================================================================================================= #
 
 # R options
 options(warn = -1)
@@ -74,3 +75,26 @@ lapply(1:length(mtlList), function(i){
   })
   
 })
+
+# ============================================================================================================= #
+# Image classification with Random Forest
+# ============================================================================================================= #
+
+# R options
+options(warn = -1)
+options(scipen = 999)
+
+# load packages
+suppressMessages(library(rgdal))
+suppressMessages(library(raster))
+suppressMessages(library(caret))
+
+imgList <- list.files(path = 'D:/Harold/_maps/landsat/images/2000/LE70070572000044EDC00', full.names = T)
+grep2 <- Vectorize(FUN = grep, vectorize.args = 'pattern')
+imgList <- imgList[grep2(pattern = paste("/B", c(1:5, 7), '_dn_ref.tif', sep = ''), x = imgList)]
+
+img <- raster::stack(imgList); rm(imgList)
+names(img) <- c(paste0("B", 1:5, coll = ""), "B7")
+
+plotRGB(img * (img >= 0), r = 4, g = 5, b = 3, scale = 10000)
+
