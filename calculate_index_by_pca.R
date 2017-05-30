@@ -7,8 +7,8 @@ options(warn=-1); options(scipen = 999)
 suppressMessages(if(!require(FactoMineR)){install.packages('FactoMineR'); library(FactoMineR)} else {library(FactoMineR)})
 
 # Load data
-df # Data matrix
-analysis <- PCA(df, scale.unit = T, graph = F)
+# df # Data matrix
+# analysis <- PCA(df, scale.unit = T, graph = F)
 
 # Calculate evaluation index
 index_cal  <- function(analysis){
@@ -48,4 +48,4 @@ index_cal  <- function(analysis){
   
 }
 
-index_values <- index_cal(analysis)
+# index_values <- index_cal(analysis)
