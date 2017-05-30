@@ -3,8 +3,8 @@
 # 2016
 
 # Load packages
-options(warn=-1); options(scipen = 999)
-suppressMessages(if(!require(FactoMineR)){install.packages('FactoMineR'); library(FactoMineR)} else {library(FactoMineR)})
+# options(warn=-1); options(scipen = 999)
+# suppressMessages(if(!require(FactoMineR)){install.packages('FactoMineR'); library(FactoMineR)} else {library(FactoMineR)})
 
 # Load data
 # df # Data matrix
