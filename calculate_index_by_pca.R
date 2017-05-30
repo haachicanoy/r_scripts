@@ -18,24 +18,24 @@ index_cal  <- function(analysis){
   
   if(a_class=="MFA"){
     
-    w <- analysis$eig[,1] # Extracción de valores propios
+    w <- analysis$eig[,1] # Extraccion de valores propios
     q <- w/sum(w)         # Porcentaje de varianza explicada
     i <- q[1]*analysis$quanti.var$coord[,1] + q[2]*analysis$quanti.var$coord[,2] # Ponderaciones de variables
-    l <- i/sum(i)         # Estandarización
-    Ind0 <- scale(analysis$call$XTDC)%*%l   # Ponderación individuos
-    Ind1 <- (exp(Ind0))/(1+(exp(Ind0)))*100 # Índice final
+    l <- i/sum(i)         # Estandarizacion
+    Ind0 <- scale(analysis$call$XTDC)%*%l   # Ponderacion individuos
+    Ind1 <- (exp(Ind0))/(1+(exp(Ind0)))*100 # Indice final
     return(Ind1)
     
   } else {
     
     if(a_class=="PCA"){
       
-      w <- analysis$eig[,1] # Extracción de valores propios
+      w <- analysis$eig[,1] # Extraccion de valores propios
       q <- w/sum(w)         # Porcentaje de varianza explicada
       i <- q[1]*analysis$var$coord[,1] + q[2]*analysis$var$coord[,2] # Ponderaciones de variables
-      l <- i/sum(i)         # Estandarización
-      Ind0 <- scale(analysis$call$X)%*%l      # Ponderación individuos
-      Ind1 <- (exp(Ind0))/(1+(exp(Ind0)))*100 # Índice final
+      l <- i/sum(i)         # Estandarizacion
+      Ind0 <- scale(analysis$call$X)%*%l      # Ponderacion individuos
+      Ind1 <- (exp(Ind0))/(1+(exp(Ind0)))*100 # Indice final
       return(Ind1)
       
     } else {
