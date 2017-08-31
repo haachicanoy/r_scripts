@@ -1,0 +1,30 @@
+% CONCEPTOS GENERALES
+
+% Simple calcs
+
+{Browse 9999*999}
+{Browse 999*999}
+
+% Variable declarativas
+declare
+V = 9999*9999
+{Browse V*V}
+V = 5
+
+% Funciones
+% Factorial function
+declare
+fun {Fact N}
+   if N==0 then 1 else N*{Fact N-1} end
+end
+{Browse Fact}
+{Browse {Fact 5}}
+{Browse {Fact 10}}
+
+% Combinatorial function
+declare
+fun {Comb N K}
+   {Fact N} div ({Fact K}*{Fact N-K})
+end
+{Browse Comb}
+{Browse {Comb 10 5}}
