@@ -150,8 +150,9 @@ fun {PascalXor N} {PascalGenerico Xor N} end
 fun {PascalRapido N} {PascalGenerico Sum N} end
 {Browse {PascalRapido 10}}
 {Browse {PascalXor 10}}
+{Browse {PascalGenerico Number.'*' 10}}
 
-%%%%% Concurrency and flow data
+%%%%% Concurrency and dataflow
 
 % Concurrency: threads
 declare
@@ -174,3 +175,73 @@ thread
    {Browse ini} {Browse X*X}
 end
 {Delay 10000} X=99
+
+%%%%% State, objects and classes
+
+% State
+
+declare
+C = {NewCell _}
+{Browse C}
+% C := 0
+% {Browse @C}
+C := @C + 1
+{Browse @C}
+C = {NewCell 2}
+
+declare
+C = {NewCell 0}
+fun {PascalRapido N}
+   C := @C + 1
+   {PascalGenerico Sum N}
+end
+{Browse @C}
+
+{Browse {PascalRapido 5}}
+{Browse @C}
+
+{Browse {PascalRapido 5}}
+{Browse @C}
+
+% Objects
+
+declare
+local C in
+   C = {NewCell 0}
+   fun {Incr}
+      C := @C + 1 @C
+   end
+   fun {Leer}
+      @C
+   end
+end
+{Browse @C}
+{Browse {Incr}}
+{Browse {Leer}}
+
+% Classes
+
+declare
+fun {ContadorNuevo}
+   C Incr Leer in
+   C = {NewCell 0}
+   fun {Incr}
+      C := @C + 1 @C
+   end
+   fun {Leer}
+      @C
+   end
+   contador(incr:Incr
+	    leer:Leer)
+end
+
+declare
+Ctr1 = {ContadorNuevo}
+Ctr2 = {ContadorNuevo}
+{Browse {Ctr2.incr}}
+
+{Browse {Ctr1.leer}}
+{Browse Ctr1}
+{Browse Ctr2}
+
+
