@@ -198,3 +198,44 @@ declare Y
  Y}
 {Browse Y}
 {Browse Y.1}
+
+% Flujos perezosos
+% Productor/Consumidor revisitado
+declare
+fun lazy {Generar N} N|{Generar N+1} end
+fun {Suma Xs A Limite}
+   if Limite > 0 then
+      case Xs of X|Xr then {Suma Xr A+X Limite-1} end
+   else A end
+end
+
+local Xs S in
+   thread Xs = {Generar 0} end
+   S = {Suma Xs 0 150}
+   {Browse S}
+   {Browse Xs}
+end
+
+% Problema de Hamming
+declare
+fun lazy {MultEscalar N H}
+   case H of X|H2 then N*X|{MultEscalar N H2} end
+end
+fun lazy {Mezclar Xs Ys}
+   case Xs#Ys of (X|Xr)#(Y|Yr) then
+      if X<Y then X|{Mezclar Xr Ys}
+      elseif X>Y then Y|{Mezclar Xs Yr}
+      else X|{Mezclar Xr Yr}
+      end
+   end
+end
+H = 1|{Mezclar {MultEscalar 2 H}
+       {Mezclar {MultEscalar 3 H}
+	{MultEscalar 5 H}}}
+{Browse H}
+
+declare
+proc {Tocar N H}
+   if N>0 then {Tocar N-1 H.2} else skip end
+end
+{Tocar 30 H}
