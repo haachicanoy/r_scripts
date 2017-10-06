@@ -1,0 +1,16 @@
+% Taller programacion concurrente declarativa
+
+% Punto 1
+declare A B C D in
+thread D = C + 1 end
+thread C = B + 1 end
+thread A = 1 end
+thread B = A + 1 end
+{Browse D}
+
+% En que orden son creados los hilos?
+% En que orden son evaluados los hilos?
+
+% Punto 2
+
+% Punto 3
